@@ -2317,4 +2317,7 @@
     <!-- Activity scroll boost params -->
     <integer name="ascrollboost_timeout">0</integer>
     <integer-array name="ascrollboost_param_value"/>
+
+   <!-- Configuration to play sms ringtone during MO/MT call -->
+   <bool name="config_sms_ringtone_incall">false</bool>
 </resources>
