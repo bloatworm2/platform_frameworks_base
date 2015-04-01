@@ -312,6 +312,8 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 com.android.internal.R.integer.config_autoBrightnessLightSensorRate);
         long brighteningLightDebounce = resources.getInteger(
                 com.android.internal.R.integer.config_autoBrightnessBrighteningLightDebounce);
+        long brighteningLightFastDebounce = resources.getInteger(
+                com.android.internal.R.integer.config_autoBrightnessBrighteningLightFastDebounce);
         long darkeningLightDebounce = resources.getInteger(
                 com.android.internal.R.integer.config_autoBrightnessDarkeningLightDebounce);
         boolean autoBrightnessResetAmbientLuxAfterWarmUp = resources.getBoolean(
@@ -350,12 +352,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
                 if (bottom < screenBrightnessRangeMinimum) {
                     screenBrightnessRangeMinimum = bottom;
                 }
-                mAutomaticBrightnessController = new AutomaticBrightnessController(this,
+                mAutomaticBrightnessController = new AutomaticBrightnessController(mContext, this,
                         handler.getLooper(), sensorManager, screenAutoBrightnessSpline,
                         lightSensorWarmUpTimeConfig, screenBrightnessRangeMinimum,
                         mScreenBrightnessRangeMaximum, dozeScaleFactor, lightSensorRate,
-                        brighteningLightDebounce, darkeningLightDebounce,
-                        autoBrightnessResetAmbientLuxAfterWarmUp, ambientLightHorizon);
+                        brighteningLightDebounce, brighteningLightFastDebounce,
+                        darkeningLightDebounce, autoBrightnessResetAmbientLuxAfterWarmUp,
+                        ambientLightHorizon);
             }
         }
 

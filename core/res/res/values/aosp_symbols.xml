@@ -48,4 +48,7 @@
     <java-symbol type="array" name="shutdown_reboot_options" />
     <java-symbol type="array" name="shutdown_reboot_actions" />
     <java-symbol type="bool" name="config_advanced_reboot" />
+
+    <!-- Automatic brightness enhancements -->
+    <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
 </resources>
