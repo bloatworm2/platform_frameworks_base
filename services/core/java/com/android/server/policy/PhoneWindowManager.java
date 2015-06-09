@@ -2963,7 +2963,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mHomeDoubleTapPending = false;
                     mHandler.removeCallbacks(mHomeDoubleTapTimeoutRunnable);
                     performKeyAction(mDoubleTapOnHomeBehavior, event);
-                    mHomeConsumed = true;
+                    mHomeConsumed = mDoubleTapOnHomeBehavior != KEY_ACTION_SLEEP;
                 } else if (mLongPressOnHomeBehavior == KEY_ACTION_APP_SWITCH
                         || mDoubleTapOnHomeBehavior == KEY_ACTION_APP_SWITCH) {
                     preloadRecentApps();
