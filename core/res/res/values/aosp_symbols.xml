@@ -62,4 +62,7 @@
     <!-- Uicc hotswapped event configuration needed notification -->
     <java-symbol type="string" name="uicc_hot_swapped_event_title" />
     <java-symbol type="string" name="uicc_hot_swapped_event_text" />
+
+    <!-- Wifi AP Disabled from Subscription change -->
+    <java-symbol type="string" name="subscription_change_disabled_wifi_ap" />
 </resources>
