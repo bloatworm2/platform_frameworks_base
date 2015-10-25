@@ -26,6 +26,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.DashPathEffect;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -65,6 +66,7 @@ public class BatteryMeterView extends View implements DemoMode,
         BATTERY_METER_ICON_PORTRAIT,
         BATTERY_METER_ICON_LANDSCAPE,
         BATTERY_METER_CIRCLE,
+        BATTERY_METER_DOTTED_CIRCLE,
         BATTERY_METER_TEXT
     }
 
@@ -264,6 +266,7 @@ public class BatteryMeterView extends View implements DemoMode,
     protected BatteryMeterDrawable createBatteryMeterDrawable(BatteryMeterMode mode) {
         Resources res = mContext.getResources();
         switch (mode) {
+            case BATTERY_METER_DOTTED_CIRCLE:
             case BATTERY_METER_CIRCLE:
                 return new CircleBatteryMeterDrawable(res);
             case BATTERY_METER_ICON_LANDSCAPE:
@@ -281,7 +284,8 @@ public class BatteryMeterView extends View implements DemoMode,
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        if (mMeterMode == BatteryMeterMode.BATTERY_METER_CIRCLE) {
+        if (mMeterMode == BatteryMeterMode.BATTERY_METER_CIRCLE ||
+                mMeterMode == BatteryMeterMode.BATTERY_METER_DOTTED_CIRCLE) {
             height += (CircleBatteryMeterDrawable.STROKE_WITH / 3);
             width = height;
         } else if (mMeterMode == BatteryMeterMode.BATTERY_METER_TEXT) {
@@ -325,6 +329,9 @@ public class BatteryMeterView extends View implements DemoMode,
         switch (style) {
             case BatteryController.STYLE_CIRCLE:
                 meterMode = BatteryMeterMode.BATTERY_METER_CIRCLE;
+                break;
+            case BatteryController.STYLE_DOTTED_CIRCLE:
+                meterMode = BatteryMeterMode.BATTERY_METER_DOTTED_CIRCLE;
                 break;
             case BatteryController.STYLE_GONE:
                 meterMode = BatteryMeterMode.BATTERY_METER_GONE;
@@ -776,6 +783,8 @@ public class BatteryMeterView extends View implements DemoMode,
 
         private boolean mDisposed;
 
+        private DashPathEffect mPathEffect;
+
         private int     mAnimOffset;
         private boolean mIsAnimating;   // stores charge-animation status to reliably
         //remove callbacks
@@ -826,6 +835,8 @@ public class BatteryMeterView extends View implements DemoMode,
             mWarningTextPaint.setTextAlign(Paint.Align.CENTER);
 
             mChargeColor = getResources().getColor(R.color.batterymeter_charge_color);
+
+            mPathEffect = new DashPathEffect(new float[]{3,2},0);
 
             mBoltPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mBoltPaint.setColor(res.getColor(R.color.batterymeter_bolt_color));
@@ -894,6 +905,12 @@ public class BatteryMeterView extends View implements DemoMode,
                 if (tracker.status == BatteryManager.BATTERY_STATUS_FULL) {
                     level = 100;
                 }
+            }
+
+            if (mMeterMode == BatteryMeterMode.BATTERY_METER_DOTTED_CIRCLE) {
+                paint.setPathEffect(mPathEffect);
+            } else {
+                paint.setPathEffect(null);
             }
 
             // draw thin gray ring first
