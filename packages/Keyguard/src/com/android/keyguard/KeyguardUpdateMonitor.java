@@ -277,6 +277,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
                 case MSG_LOCALE_CHANGED:
                     handleLocaleChanged();
                     break;
+                case MSG_LOCALE_CHANGED:
+                    handleLocaleChanged();
+                    break;
             }
         }
     };
