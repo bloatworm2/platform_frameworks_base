@@ -261,6 +261,7 @@ public class SignalClusterView
     @Override
     public void setNoSims(boolean show) {
         mNoSimsVisible = show && !mBlockMobile;
+        apply();
     }
 
     @Override
