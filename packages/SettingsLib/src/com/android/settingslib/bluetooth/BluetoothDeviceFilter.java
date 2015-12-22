@@ -113,6 +113,9 @@ public final class BluetoothDeviceFilter {
                     return true;
                 }
                 if (BluetoothUuid.containsAnyUuid(uuids, A2dpSinkProfile.SRC_UUIDS)) {
+                 return true;
+                }
+                if (BluetoothUuid.containsAnyUuid(uuids, HeadsetClientProfile.UUIDS)) {
                     return true;
                 }
                 if (BluetoothUuid.containsAnyUuid(uuids, HeadsetProfile.UUIDS)) {
@@ -121,6 +124,7 @@ public final class BluetoothDeviceFilter {
             } else if (btClass != null) {
                 if (btClass.doesClassMatch(BluetoothClass.PROFILE_A2DP) ||
                     btClass.doesClassMatch(BluetoothClass.PROFILE_A2DP_SINK) ||
+                    btClass.doesClassMatch(BluetoothClass.PROFILE_HEADSET_CLIENT) ||
                         btClass.doesClassMatch(BluetoothClass.PROFILE_HEADSET)) {
                     return true;
                 }
