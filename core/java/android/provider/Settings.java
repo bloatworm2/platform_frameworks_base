@@ -3314,7 +3314,7 @@ public final class Settings {
          * the setting value. See an example above.
          */
 
-         /**
+        /**
          * Whether wifi settings will connect to access point automatically
          * 0 = automatically
          * 1 = manually
@@ -3322,6 +3322,12 @@ public final class Settings {
          */
         public static final String WIFI_AUTO_CONNECT_TYPE = "wifi_auto_connect_type";
 
+
+        /**
+         * Whether or not volume button music controls should be enabled to seek media tracks
+         * @hide
+         */
+        public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
 
         /**
          * Locale for secondary overlay on dialer for t9 search input
