@@ -139,6 +139,7 @@ void UNUSED(T... t) {}
         return;                                                                         \
     case RS_TYPE_SIGNED_16:                                                             \
     case RS_TYPE_UNSIGNED_16:                                                           \
+    case RS_TYPE_FLOAT_16:                                                              \
         len = _env->GetArrayLength((jshortArray)data);                                  \
         ptr = _env->GetShortArrayElements((jshortArray)data, flag);                     \
         typeBytes = 2;                                                                  \
