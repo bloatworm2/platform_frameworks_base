@@ -43,4 +43,7 @@
 
     <!-- Battery -->
     <string name="battery_title">Battery Customisations</string>
+
+    <!-- CellularTile data sim not configured state string -->
+    <string name="data_sim_not_configured">No data SIM</string>
 </resources>
