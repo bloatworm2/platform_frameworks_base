@@ -58,4 +58,8 @@
 
     <!-- Automatic brightness enhancements -->
     <java-symbol type="integer" name="config_autoBrightnessBrighteningLightFastDebounce"/>
+
+    <!-- Uicc hotswapped event configuration needed notification -->
+    <java-symbol type="string" name="uicc_hot_swapped_event_title" />
+    <java-symbol type="string" name="uicc_hot_swapped_event_text" />
 </resources>
