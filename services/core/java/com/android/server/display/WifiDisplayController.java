@@ -177,6 +177,7 @@ final class WifiDisplayController implements DumpUtils.Dump {
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+        intentFilter.addAction(Intent.ACTION_SHUTDOWN);
         context.registerReceiver(mWifiP2pReceiver, intentFilter, null, mHandler);
 
         ContentObserver settingsObserver = new ContentObserver(mHandler) {
@@ -890,6 +891,11 @@ final class WifiDisplayController implements DumpUtils.Dump {
                     }
                 });
             }
+          } else if (networkInfo.getState() == NetworkInfo.State.CONNECTING) {
+             // Nothing to do...
+             if (DEBUG) {
+                 Slog.d(TAG, "Connecting... ");
+             }
         } else {
             mConnectedDeviceGroupInfo = null;
 
@@ -1108,6 +1114,10 @@ final class WifiDisplayController implements DumpUtils.Dump {
                 if (DEBUG) {
                     Slog.d(TAG, "Received WIFI_P2P_THIS_DEVICE_CHANGED_ACTION: mThisDevice= "
                             + mThisDevice);
+                }
+            } else if (action.equals(Intent.ACTION_SHUTDOWN)) {
+                if (mConnectedDevice != null) {
+                    disconnect();
                 }
             }
         }
