@@ -40,4 +40,7 @@
 
     <!-- Screen record notification error title -->
     <string name="screenrecord_notif_error">Unable to record screen</string>
+
+    <!-- Battery -->
+    <string name="battery_title">Battery Customisations</string>
 </resources>
