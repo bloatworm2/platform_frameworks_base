@@ -19,7 +19,7 @@ package com.android.settingslib.bluetooth;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothHeadsetClient;
+import android.bluetooth.BluetoothHeadset;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothUuid;
 import android.content.Context;
@@ -32,13 +32,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * HeadsetClientProfile handles Bluetooth HFP and Headset profiles.
+ * HeadsetProfile handles Bluetooth HFP and Headset profiles.
  */
-public final class HeadsetClientProfile implements LocalBluetoothProfile {
-    private static final String TAG = "HeadsetClientProfile";
+public final class HeadsetProfile implements LocalBluetoothProfile {
+    private static final String TAG = "HeadsetProfile";
     private static boolean V = true;
 
-    private BluetoothHeadsetClient mService;
+    private BluetoothHeadset mService;
     private boolean mIsProfileReady;
 
     private final LocalBluetoothAdapter mLocalAdapter;
@@ -46,22 +46,22 @@ public final class HeadsetClientProfile implements LocalBluetoothProfile {
     private final LocalBluetoothProfileManager mProfileManager;
 
     static final ParcelUuid[] UUIDS = {
-        BluetoothUuid.HSP_AG,
-        BluetoothUuid.Handsfree_AG,
+        BluetoothUuid.HSP,
+        BluetoothUuid.Handsfree,
     };
 
-    static final String NAME = "HEADSETCLIENT";
+    static final String NAME = "HEADSET";
 
     // Order of this profile in device profiles list
     private static final int ORDINAL = 0;
 
     // These callbacks run on the main thread.
-    private final class HeadsetClientServiceListener
+    private final class HeadsetServiceListener
             implements BluetoothProfile.ServiceListener {
 
         public void onServiceConnected(int profile, BluetoothProfile proxy) {
             if (V) Log.d(TAG,"Bluetooth service connected");
-            mService = (BluetoothHeadsetClient) proxy;
+            mService = (BluetoothHeadset) proxy;
             // We just bound to the service, so refresh the UI for any connected HFP devices.
             List<BluetoothDevice> deviceList = mService.getConnectedDevices();
             while (!deviceList.isEmpty()) {
@@ -69,10 +69,10 @@ public final class HeadsetClientProfile implements LocalBluetoothProfile {
                 CachedBluetoothDevice device = mDeviceManager.findDevice(nextDevice);
                 // we may add a new device here, but generally this should not happen
                 if (device == null) {
-                    Log.w(TAG, "HeadsetClientProfile found new device: " + nextDevice);
+                    Log.w(TAG, "HeadsetProfile found new device: " + nextDevice);
                     device = mDeviceManager.addDevice(mLocalAdapter, mProfileManager, nextDevice);
                 }
-                device.onProfileStateChanged(HeadsetClientProfile.this,
+                device.onProfileStateChanged(HeadsetProfile.this,
                         BluetoothProfile.STATE_CONNECTED);
                 device.refresh();
             }
@@ -92,14 +92,14 @@ public final class HeadsetClientProfile implements LocalBluetoothProfile {
         return mIsProfileReady;
     }
 
-    HeadsetClientProfile(Context context, LocalBluetoothAdapter adapter,
+    HeadsetProfile(Context context, LocalBluetoothAdapter adapter,
             CachedBluetoothDeviceManager deviceManager,
             LocalBluetoothProfileManager profileManager) {
         mLocalAdapter = adapter;
         mDeviceManager = deviceManager;
         mProfileManager = profileManager;
-        mLocalAdapter.getProfileProxy(context, new HeadsetClientServiceListener(),
-                BluetoothProfile.HEADSET_CLIENT);
+        mLocalAdapter.getProfileProxy(context, new HeadsetServiceListener(),
+                BluetoothProfile.HEADSET);
     }
 
     public boolean isConnectable() {
@@ -112,10 +112,10 @@ public final class HeadsetClientProfile implements LocalBluetoothProfile {
 
     public boolean connect(BluetoothDevice device) {
         if (mService == null) return false;
-        List<BluetoothDevice> srcs = mService.getConnectedDevices();
-        if (srcs != null) {
-            for (BluetoothDevice src : srcs) {
-                Log.d(TAG,"Not disconnecting device = " + src);
+        List<BluetoothDevice> sinks = mService.getConnectedDevices();
+        if (sinks != null) {
+            for (BluetoothDevice sink : sinks) {
+                Log.d(TAG,"Not disconnecting device = " + sink);
             }
         }
         return mService.connect(device);
@@ -216,11 +216,11 @@ public final class HeadsetClientProfile implements LocalBluetoothProfile {
         if (V) Log.d(TAG, "finalize()");
         if (mService != null) {
             try {
-                BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.HEADSET_CLIENT,
+                BluetoothAdapter.getDefaultAdapter().closeProfileProxy(BluetoothProfile.HEADSET,
                                                                        mService);
                 mService = null;
             }catch (Throwable t) {
-                Log.w(TAG, "Error cleaning up HFP proxy", t);
+                Log.w(TAG, "Error cleaning up HID proxy", t);
             }
         }
     }
