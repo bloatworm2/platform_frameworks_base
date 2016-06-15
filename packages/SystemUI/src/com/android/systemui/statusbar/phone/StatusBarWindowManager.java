@@ -19,6 +19,7 @@ package com.android.systemui.statusbar.phone;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Point;
@@ -66,6 +67,7 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
     private final SurfaceSession mFxSession;
 
     private final KeyguardMonitor mKeyguardMonitor;
+    private int mCurrentOrientation;
 
     private static final int TYPE_LAYER_MULTIPLIER = 10000; // refer to WindowManagerService.TYPE_LAYER_MULTIPLIER
     private static final int TYPE_LAYER_OFFSET = 1000;      // refer to WindowManagerService.TYPE_LAYER_OFFSET
@@ -146,6 +148,7 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
             Display display = mWindowManager.getDefaultDisplay();
             Point xy = new Point();
             display.getRealSize(xy);
+            mCurrentOrientation = mContext.getResources().getConfiguration().orientation;
             mKeyguardBlur = new BlurLayer(mFxSession, xy.x, xy.y, "KeyGuard");
             if (mKeyguardBlur != null) {
                 mKeyguardBlur.setLayer(STATUS_BAR_LAYER - 2);
@@ -358,6 +361,16 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
     public void setShowingMedia(boolean showingMedia) {
         mShowingMedia = showingMedia;
         applyKeyguardBlurShow();
+    }
+
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (mKeyguardBlur != null && newConfig.orientation != mCurrentOrientation) {
+            Display display = mWindowManager.getDefaultDisplay();
+            Point xy = new Point();
+            display.getRealSize(xy);
+            mKeyguardBlur.setSize(xy.x, xy.y);
+            mCurrentOrientation = newConfig.orientation;
+        }
     }
 
     /**
