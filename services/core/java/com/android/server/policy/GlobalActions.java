@@ -21,8 +21,8 @@ import com.android.internal.app.AlertController.AlertParams;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.internal.R;
-import com.android.internal.util.ThemeUtils;
 import com.android.internal.util.UserIcons;
+import com.android.internal.util.ThemeUtils;
 import com.android.internal.widget.LockPatternUtils;
 
 import android.app.ActivityManager;
@@ -225,10 +225,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     }
 
     private Context getUiContext() {
-        if (mUiContext == null) {
-            mUiContext = ThemeUtils.createUiContext(mContext);
-            mUiContext.setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
-        }
+        mUiContext = ThemeUtils.createUiContext(mContext);
+        mUiContext.setTheme(android.R.style.Theme_DeviceDefault_Light_DarkActionBar);
         return mUiContext != null ? mUiContext : mContext;
     }
 
