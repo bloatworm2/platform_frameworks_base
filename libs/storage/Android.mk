@@ -11,6 +11,4 @@ LOCAL_MODULE:= libstorage
 
 LOCAL_CFLAGS += -Wall -Werror
 
-LOCAL_SHARED_LIBRARIES := libbinder
-
 include $(BUILD_STATIC_LIBRARY)

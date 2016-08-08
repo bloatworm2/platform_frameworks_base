@@ -429,7 +429,7 @@ MtpResponseCode MyMtpDatabase::getObjectPropertyValue(MtpObjectHandle handle,
                 packet.putInt128(longValue);
                 break;
             case MTP_TYPE_UINT128:
-                packet.putUInt128(longValue);
+                packet.putInt128(longValue);
                 break;
             case MTP_TYPE_STR:
             {
@@ -1157,16 +1157,9 @@ static void
 android_mtp_MtpDatabase_finalize(JNIEnv *env, jobject thiz)
 {
     MyMtpDatabase* database = (MyMtpDatabase *)env->GetLongField(thiz, field_context);
+    database->cleanup(env);
     delete database;
     env->SetLongField(thiz, field_context, 0);
-    checkAndClearExceptionFromCallback(env, __FUNCTION__);
-}
-
-static void
-android_mtp_MtpDatabase_cleanup(JNIEnv *env, jobject thiz)
-{
-    MyMtpDatabase* database = (MyMtpDatabase *)env->GetLongField(thiz, field_context);
-    database->cleanup(env);
     checkAndClearExceptionFromCallback(env, __FUNCTION__);
 }
 
@@ -1183,7 +1176,6 @@ android_mtp_MtpPropertyGroup_format_date_time(JNIEnv *env, jobject /*thiz*/, jlo
 static JNINativeMethod gMtpDatabaseMethods[] = {
     {"native_setup",            "()V",  (void *)android_mtp_MtpDatabase_setup},
     {"native_finalize",         "()V",  (void *)android_mtp_MtpDatabase_finalize},
-    {"native_cleanup",         "()V",  (void *)android_mtp_MtpDatabase_cleanup},
 };
 
 static JNINativeMethod gMtpPropertyGroupMethods[] = {

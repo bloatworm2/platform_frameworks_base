@@ -217,8 +217,6 @@ public class MtpDatabase {
         if (server != null) {
             mContext.registerReceiver(mBatteryReceiver,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        } else {
-            native_cleanup();
         }
     }
 
@@ -1104,5 +1102,4 @@ public class MtpDatabase {
 
     private native final void native_setup();
     private native final void native_finalize();
-    private native final void native_cleanup();
 }
