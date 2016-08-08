@@ -133,5 +133,4 @@ LOCAL_STATIC_LIBRARIES += libaapt $(aaptHostStaticLibs)
 
 include $(BUILD_HOST_NATIVE_TEST)
 
-
 endif # No TARGET_BUILD_APPS or TARGET_BUILD_PDK
