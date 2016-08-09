@@ -621,7 +621,13 @@ public class DocumentsActivity extends BaseActivity {
         if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+        final int id = item.getItemId();
+        if (id == R.id.menu_paste) {
+            onPasteRequested();
+            return true;
+        } else {
         return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -1053,7 +1059,10 @@ public class DocumentsActivity extends BaseActivity {
 
                     // If we cut, delete the original file
                     if (!mIsCopy) {
+                        client = DocumentsApplication.acquireUnstableProviderOrThrow(
+                               resolver, doc.derivedUri.getAuthority());
                         DocumentsContract.deleteDocument(client, doc.derivedUri);
+                        ContentProviderClient.releaseQuietly(client);
                     }
 
                     count++;
