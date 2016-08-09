@@ -21,6 +21,7 @@ import android.Manifest;
 import android.app.DownloadManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManagerInternal.PackagesProvider;
@@ -701,7 +702,6 @@ final class DefaultPermissionGrantPolicy {
         }
     }
 
-
     private void grantDefaultPermissionsToDefaultSystemSmsAppLPr(
             PackageParser.Package smsPackage, int userId) {
         if (doesPackageSupportRuntimePermissions(smsPackage)) {
@@ -712,7 +712,6 @@ final class DefaultPermissionGrantPolicy {
             grantRuntimePermissionsLPw(smsPackage, STORAGE_PERMISSIONS, true, userId);
         }
     }
-
 
     public void grantDefaultPermissionsToDefaultSmsAppLPr(String packageName, int userId) {
         Log.i(TAG, "Granting permissions to default sms app for user:" + userId);
@@ -793,7 +792,12 @@ final class DefaultPermissionGrantPolicy {
             Intent intent, int userId) {
         ResolveInfo handler = mService.resolveIntent(intent,
                 intent.resolveType(mService.mContext.getContentResolver()), 0, userId);
-        if (handler == null) {
+        if (handler == null || handler.activityInfo == null) {
+            return null;
+        }
+        ActivityInfo activityInfo = handler.activityInfo;
+        if (activityInfo.packageName.equals(mService.mResolveActivity.packageName)
+                && activityInfo.name.equals(mService.mResolveActivity.name)) {
             return null;
         }
         return getSystemPackageLPr(handler.activityInfo.packageName);
