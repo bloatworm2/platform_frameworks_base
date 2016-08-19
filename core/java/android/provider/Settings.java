@@ -3296,12 +3296,6 @@ public final class Settings {
          */
         public static final String RECENTS_SHOW_SEARCH_BAR = "recents_show_search_bar";
 
-        /**
-         * Whether to display recents in full screen
-         * @hide
-         */
-        public static final String RECENTS_FULL_SCREEN = "recents_full_screen";
-
         /** 
          * Status bar battery %* 0: Hide the battery percentage
          * 1: Display the battery percentage inside the icon
