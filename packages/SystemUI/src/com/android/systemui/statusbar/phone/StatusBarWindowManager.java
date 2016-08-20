@@ -16,13 +16,17 @@
 
 package com.android.systemui.statusbar.phone;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
+import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.Display;
 import android.view.SurfaceSession;
@@ -70,8 +74,23 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
 
     private final State mCurrentState = new State();
 
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            // Observe all users' changes
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.UI_BLUR_ENABLED), false, this,
+                    UserHandle.USER_ALL);
+        }
+    }
+
     public StatusBarWindowManager(Context context, KeyguardMonitor kgm) {
         mContext = context;
+        ContentResolver resolver = mContext.getContentResolver();
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         mKeyguardScreenRotation = shouldEnableKeyguardScreenRotation();
         mScreenBrightnessDoze = mContext.getResources().getInteger(
@@ -79,8 +98,9 @@ public class StatusBarWindowManager implements KeyguardMonitor.Callback {
 
         mKeyguardMonitor = kgm;
         mKeyguardMonitor.addCallback(this);
-        mKeyguardBlurEnabled = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_ui_blur_enabled);
+        mKeyguardBlurEnabled = Settings.System.getIntForUser(resolver,
+                    Settings.System.UI_BLUR_ENABLED,
+                    1, UserHandle.USER_CURRENT) != 0;
         mFxSession = new SurfaceSession();
     }
 

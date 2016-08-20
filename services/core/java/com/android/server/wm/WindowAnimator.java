@@ -29,8 +29,13 @@ import static com.android.server.wm.WindowManagerService.LayoutFields.SET_FORCE_
 import static com.android.server.wm.WindowManagerService.LayoutFields.SET_ORIENTATION_CHANGE_COMPLETE;
 import static com.android.server.wm.WindowManagerService.LayoutFields.SET_WALLPAPER_ACTION_PENDING;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.ContentObserver;
+import android.os.Handler;
 import android.os.RemoteException;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.util.Slog;
 import android.util.SparseArray;
 import android.util.TimeUtils;
@@ -114,13 +119,29 @@ public class WindowAnimator {
         }
     }
 
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            // Observe all users' changes
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.UI_BLUR_ENABLED), false, this,
+                    UserHandle.USER_ALL);
+        }
+    }
+
     WindowAnimator(final WindowManagerService service) {
         mService = service;
         mContext = service.mContext;
         mPolicy = service.mPolicy;
+        ContentResolver resolver = mContext.getContentResolver();
 
-        mBlurUiEnabled = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_ui_blur_enabled);
+        mBlurUiEnabled = Settings.System.getIntForUser(resolver,
+                    Settings.System.UI_BLUR_ENABLED,
+                    1, UserHandle.USER_CURRENT) != 0;
 
         mAnimationFrameCallback = new Choreographer.FrameCallback() {
             public void doFrame(long frameTimeNs) {

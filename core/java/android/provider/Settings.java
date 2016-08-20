@@ -3140,6 +3140,12 @@ public final class Settings {
         public static final Validator LOCKSCREEN_DISABLED_VALIDATOR = sBooleanValidator;
 
         /**
+         * Whether blur effect should be enabled.
+         * @hide
+         */
+        public static final String UI_BLUR_ENABLED = "ui_blur_enabled";
+
+        /**
          * @deprecated Use {@link android.provider.Settings.Global#LOW_BATTERY_SOUND}
          * instead
          * @hide
