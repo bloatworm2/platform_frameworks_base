@@ -413,6 +413,7 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
     private Action getBugReportAction() {
         return new SinglePressAction(com.android.internal.R.drawable.ic_lock_bugreport,
                 R.string.bugreport_title) {
+        }
     }
 
     private class BugReportAction extends SinglePressAction implements LongPressAction {
