@@ -3838,6 +3838,12 @@ public final class Settings {
         public static final String ANBI_ENABLED = "anbi_enabled";
 
         /**
+          * Whether blur effect should be enabled.
+          * @hide
+          */
+         public static final String LOCK_SCREEN_BLUR_ENABLED = "uiBlurEnabled";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
