@@ -1176,11 +1176,11 @@ public class CarrierConfigManager {
         sDefaults.putStringArray(KEY_SIGNAL_PCO_RECEIVER_STRING_ARRAY, null);
         sDefaults.putString(KEY_CARRIER_SETUP_APP_STRING, "");
 
-        // Rat families: {GPRS, EDGE}, {EVDO, EVDO_A, EVDO_B}, {UMTS, HSPA, HSDPA, HSUPA, HSPAP},
+        // Rat families: {GPRS, EDGE}, {EVDO, EVDO_A, EVDO_B}, {UMTS, HSPA, HSDPA, HSUPA, HSPAP, HSPA+},
         // {LTE, LTE_CA}
         // Order is important - lowest precidence first
         sDefaults.putStringArray(KEY_RATCHET_RAT_FAMILIES,
-                new String[]{"1,2","7,8,12","3,11,9,10,15","14,19"});
+                new String[]{"1,2","7,8,12","3,11,9,10,15,20","14,19"});
         sDefaults.putBoolean(KEY_TREAT_DOWNGRADED_VIDEO_CALLS_AS_VIDEO_CALLS_BOOL, false);
         sDefaults.putBoolean(KEY_DROP_VIDEO_CALL_WHEN_ANSWERING_AUDIO_CALL_BOOL, false);
         sDefaults.putBoolean(KEY_ALLOW_MERGE_WIFI_CALLS_WHEN_VOWIFI_OFF_BOOL, true);
