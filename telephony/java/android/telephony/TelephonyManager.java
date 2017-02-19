@@ -1515,6 +1515,8 @@ public class TelephonyManager {
     public static final int NETWORK_TYPE_IWLAN = 18;
     /** Current network is LTE_CA {@hide} */
     public static final int NETWORK_TYPE_LTE_CA = 19;
+    /** Current network is HSPA+ {@hide} */
+    public static final int NETWORK_TYPE_HP = 20;
     /**
      * @return the NETWORK_TYPE_xxxx for current data connection.
      */
@@ -1720,6 +1722,7 @@ public class TelephonyManager {
             case NETWORK_TYPE_EHRPD:
             case NETWORK_TYPE_HSPAP:
             case NETWORK_TYPE_TD_SCDMA:
+            case NETWORK_TYPE_HP:
                 return NETWORK_CLASS_3_G;
             case NETWORK_TYPE_LTE:
             case NETWORK_TYPE_IWLAN:
@@ -1789,6 +1792,8 @@ public class TelephonyManager {
                 return "IWLAN";
             case NETWORK_TYPE_LTE_CA:
                 return "LTE_CA";
+            case NETWORK_TYPE_HP:
+                return "HP";
             default:
                 return "UNKNOWN";
         }

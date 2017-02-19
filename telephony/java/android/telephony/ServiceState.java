@@ -163,10 +163,10 @@ public class ServiceState implements Parcelable {
     public static final int RIL_RADIO_TECHNOLOGY_LTE_CA = 19;
 
     /**
-     * Xiaomi Mi5 HSPAP
+     * HSPA+
      * @hide
      */
-    public static final int RIL_RADIO_TECHNOLOGY_XIAOMI_HP = 20;
+    public static final int RIL_RADIO_TECHNOLOGY_HP = 20;
 
     /** @hide */
     public static final int RIL_RADIO_CDMA_TECHNOLOGY_BITMASK =
@@ -786,8 +786,8 @@ public class ServiceState implements Parcelable {
             case RIL_RADIO_TECHNOLOGY_LTE_CA:
                 rtString = "LTE_CA";
                 break;
-            case RIL_RADIO_TECHNOLOGY_XIAOMI_HP:
-                rtString = "HSPAP";
+            case RIL_RADIO_TECHNOLOGY_HP:
+                rtString = "HP";
                 break;
             default:
                 rtString = "Unexpected";
@@ -1157,8 +1157,8 @@ public class ServiceState implements Parcelable {
             return TelephonyManager.NETWORK_TYPE_IWLAN;
         case ServiceState.RIL_RADIO_TECHNOLOGY_LTE_CA:
             return TelephonyManager.NETWORK_TYPE_LTE_CA;
-        case ServiceState.RIL_RADIO_TECHNOLOGY_XIAOMI_HP:
-            return TelephonyManager.NETWORK_TYPE_HSPAP;
+        case ServiceState.RIL_RADIO_TECHNOLOGY_HP:
+            return TelephonyManager.NETWORK_TYPE_HP;
         default:
             return TelephonyManager.NETWORK_TYPE_UNKNOWN;
         }
@@ -1212,7 +1212,7 @@ public class ServiceState implements Parcelable {
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_TD_SCDMA
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_IWLAN
                 || radioTechnology == RIL_RADIO_TECHNOLOGY_LTE_CA
-                || radioTechnology == RIL_RADIO_TECHNOLOGY_XIAOMI_HP;
+                || radioTechnology == RIL_RADIO_TECHNOLOGY_HP;
 
     }
 
