@@ -219,7 +219,6 @@ public class MobileSignalController extends SignalController<
             }
         }
         mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_IWLAN, TelephonyIcons.WFC);
-        mNetworkToIconLookup.put(TelephonyManager.NETWORK_TYPE_HP, TelephonyIcons.HP);
     }
 
     @Override
