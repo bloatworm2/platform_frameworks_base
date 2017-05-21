@@ -3831,6 +3831,13 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_ticker";
 
         /**
+         * Indicates whether ANBI (Accidental navigation button interaction) is enabled.
+         *
+         * @hide
+         */
+        public static final String ANBI_ENABLED = "anbi_enabled";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
