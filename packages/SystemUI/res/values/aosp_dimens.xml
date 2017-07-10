@@ -15,11 +15,11 @@
      limitations under the License.
 -->
 <resources>
-    <!-- Allow Opa (Pixel navbar) layout -->
-    <bool name="config_allowOpaLayout">true</bool>
 
-    <!-- Set to true to enable the classic notification ticker that scrolls
-         Notification.tickerText across the status bar for what seems like an
-         eternity. -->
-    <bool name="enable_ticker">true</bool>
+    <!-- Status bar notification ticker -->
+    <dimen name="ticker_start_padding">6dp</dimen>
+    <dimen name="ticker_icon_end_margin">4dp</dimen>
+    <dimen name="ticker_text_top_padding">2dp</dimen>
+    <dimen name="ticker_text_end_padding">10dp</dimen>
+
 </resources>
